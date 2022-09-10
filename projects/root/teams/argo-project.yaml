@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: teams
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: teams project
+  # Allow manifests to deploy from any Git repos
+  sourceRepos:
+    - "*"
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  # Only permit applications to deploy to the guestbook namespace in the same cluster
+  destinations:
+    - namespace: "*"
+      server: "*"
+  # Deny all namespaced-scoped resources from being created, except for Deployment and StatefulSet
+  # roles:
+  #   # A role which provides read-only access to all applications in the project
+  #   - name: read-only
+  #     description: Read-only privileges to teams
+  #     policies:
+  #       - p, proj:teams:read-only, applications, get, teams/*, allow
+  #     groups:
+  #       - all
+  #   # A role which provides sync privileges to only the guestbook-dev application, e.g. to provide
+  #   # sync privileges to a CI system
+  #   - name: ci-role
+  #     description: Sync privileges for teams
+  #     policies:
+  #       - p, proj:teams:read-only, applications, sync, teams/*, allow
+  #     groups:
+  #       - team-devops

@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - 3rd/argo-application.yaml
+  - 3rd/argo-project.yaml
+  - teams/argo-application.yaml
+  - teams/argo-project.yaml

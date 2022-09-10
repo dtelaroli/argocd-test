@@ -1,17 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: team-dev-requisites
+  name: team-product
+  namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: team-dev
+  project: team-product
   destination:
     server: https://kubernetes.default.svc
-    namespace: 'team-dev'
+    namespace: product
   source:
-    path: argocd/teams/team-dev/_argo-requisites/manifests
-    repoURL: 'https://github.com/dtelaroli/argocd-test.git'
+    path: projects/root/teams/team-product
+    repoURL: https://github.com/dtelaroli/argocd-test.git
     targetRevision: main
   syncPolicy:
     automated:
