@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
+  name: team-dev-requisites
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: team-dev
   destination:
     server: https://kubernetes.default.svc
-    namespace: 'argocd'
+    namespace: 'team-dev'
   source:
     path: argocd/teams/team-dev/_argo-requisites/manifests
     repoURL: 'https://github.com/dtelaroli/argocd-test.git'
