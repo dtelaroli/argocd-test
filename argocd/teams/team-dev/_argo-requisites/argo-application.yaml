@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: team-dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: 'argocd'
+  source:
+    path: argocd/teams/team-dev/_argo-requisites/manifests
+    repoURL: 'https://github.com/dtelaroli/argocd-test.git'
+    targetRevision: main
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - FailOnSharedResource=true
