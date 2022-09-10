@@ -11,7 +11,7 @@ spec:
     namespace: '*'
   source:
     path: argocd
-    repoURL: 'git@github.com:dtelaroli/argocd-test.git'
+    repoURL: 'https://github.com/dtelaroli/argocd-test.git'
     targetRevision: HEAD
   syncPolicy:
     automated:
