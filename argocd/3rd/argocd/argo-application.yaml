@@ -10,7 +10,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: 'argocd'
   source:
-    path: 3rd/argocd/manifests
+    path: argocd/3rd/argocd/manifests
     repoURL: 'https://github.com/dtelaroli/argocd-test.git'
     targetRevision: main
   syncPolicy:
