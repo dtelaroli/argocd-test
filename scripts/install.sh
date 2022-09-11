@@ -8,6 +8,5 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 # update read pass
 argocd login localhost:8888
-argocd account update-password --account read --new-password password123
-argocd account update-password --account sync --new-password password123
-argocd account update-password --account project --new-password password123
+argocd account update-password --account team-product --new-password password123
+argocd account update-password --account admin --new-password password123

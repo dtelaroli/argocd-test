@@ -9,21 +9,8 @@ metadata:
   namespace: argocd
 data:
   policy.csv: |
-    p, role:read, applications, get, */*, allow
-    p, role:read, clusters, get, *, allow
-    p, role:read, repositories, get, *, allow
-    p, role:read, gpgkeys, get, *, allow
-    g, read, role:read
-
-    p, role:sync, applications, get, */*, allow
-    p, role:sync, applications, sync, */*, allow
-    p, role:sync, clusters, get, *, allow
-    p, role:sync, repositories, get, *, allow
-    p, role:sync, gpgkeys, get, *, allow
-    g, sync, role:sync
-
-    p, role:project, applications, get, team-product/*, allow
-    p, role:project, applications, sync, team-product/*, allow
-    g, project, role:project
-    g, project, role:read
-  policy.default: role:''
+    p, role:admin, *, *, */*, allow
+    p, role:teams, applications, get, teams/*, allow
+    g, admin, role:admin
+    g, role:teams, role:teams
+  policy.default: role:teams

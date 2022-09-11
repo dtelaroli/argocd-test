@@ -15,22 +15,16 @@ spec:
       kind: "*"
   # Only permit applications to deploy to the guestbook namespace in the same cluster
   destinations:
-    - namespace: "*"
+    - namespace: "argocd"
       server: "*"
-  # Deny all namespaced-scoped resources from being created, except for Deployment and StatefulSet
-  # roles:
-  #   # A role which provides read-only access to all applications in the project
-  #   - name: read-only
-  #     description: Read-only privileges to teams
-  #     policies:
-  #       - p, proj:teams:read-only, applications, get, teams/*, allow
-  #     groups:
-  #       - all
-  #   # A role which provides sync privileges to only the guestbook-dev application, e.g. to provide
-  #   # sync privileges to a CI system
-  #   - name: ci-role
-  #     description: Sync privileges for teams
-  #     policies:
-  #       - p, proj:teams:read-only, applications, sync, teams/*, allow
-  #     groups:
-  #       - team-devops
+    - namespace: "product"
+      server: "*"
+  roles:
+    # A role which provides operator access to all applications in the project
+    - name: operator
+      description: Operator privileges to team-product
+      policies:
+        - p, proj:team-product:operator, *, *, */*, allow
+        - p, proj:team-product:operator, *, delete, */*, deny
+      groups:
+        - team-product

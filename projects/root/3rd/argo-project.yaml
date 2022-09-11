@@ -17,20 +17,3 @@ spec:
   destinations:
     - namespace: "*"
       server: "*"
-  # Deny all namespaced-scoped resources from being created, except for Deployment and StatefulSet
-  roles:
-    # A role which provides read-only access to all applications in the project
-    - name: read-only
-      description: Read-only privileges to 3rd
-      policies:
-        - p, proj:3rd:read-only, applications, get, 3rd/*, allow
-      groups:
-        - all
-    # A role which provides sync privileges to only the guestbook-dev application, e.g. to provide
-    # sync privileges to a CI system
-    - name: ci-role
-      description: Sync privileges for 3rd
-      policies:
-        - p, proj:3rd:read-only, applications, sync, 3rd/*, allow
-      groups:
-        - team-devops
