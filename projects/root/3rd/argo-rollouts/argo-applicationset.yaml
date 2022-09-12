@@ -6,13 +6,14 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   generators:
-    - list:
-        elements:
-          - env: dev
-            url: https://kubernetes.default.svc
+    - git:
+        repoURL: https://github.com/dtelaroli/argocd-test.git
+        revision: main
+        files:
+          - path: environments/**/config.yaml
   template:
     metadata:
-      name: "argo-rollouts-{{env}}"
+      name: "argo-rollouts-{{ env }}"
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
@@ -22,7 +23,7 @@ spec:
         path: apps/3rd/argo-rollouts
         targetRevision: HEAD
       destination:
-        server: "https://kubernetes.default.svc"
+        server: "{{ url }}"
         namespace: argo-rollouts
       syncPolicy:
         automated:

@@ -5,10 +5,11 @@ metadata:
   namespace: argocd
 spec:
   generators:
-    - list:
-        elements:
-          - env: dev
-            url: https://kubernetes.default.svc
+    - git:
+        repoURL: https://github.com/dtelaroli/argocd-test.git
+        revision: main
+        files:
+          - path: environments/**/config.yaml
   template:
     metadata:
       name: "product-api-{{env}}"

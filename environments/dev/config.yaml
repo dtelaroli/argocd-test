@@ -1,0 +1,2 @@
+- env: dev
+  url: https://kubernetes.default.svc
