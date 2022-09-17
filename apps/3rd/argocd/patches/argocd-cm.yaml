@@ -13,7 +13,11 @@ data:
   resource.customizations.ignoreDifferences.all: |
     managedFieldsManagers:
       - kube-controller-manager
+      - rollouts-controller
     jsonPointers:
       - /spec/replicas
     jqPathExpressions:
       - '.webhooks[]?.failurePolicy'
+      - '.spec.tls'
+      - '.spec.http'
+      - '.spec.template'

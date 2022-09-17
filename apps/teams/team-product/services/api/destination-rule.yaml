@@ -7,9 +7,10 @@ spec:
   subsets:
     - name: stable
       labels:
-        name: guestbook-ui
-        argo-rollout/version: stable
+        guestbook.mydomain.com/app: guestbook-ui
+        argo-rollouts/version: stable
+
     - name: canary
       labels:
-        name: guestbook-ui
-        argo-rollout/version: canary
+        guestbook.mydomain.com/app: guestbook-ui
+        argo-rollouts/version: canary

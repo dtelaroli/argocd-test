@@ -7,27 +7,36 @@ spec:
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: guestbook-ui
+      guestbook.mydomain.com/app: guestbook-ui
   template:
     metadata:
       labels:
-        app: guestbook-ui
-      annotations:
+        guestbook.mydomain.com/app: guestbook-ui
+        guestbook.mydomain.com/version: "0.2"
         sidecar.istio.io/inject: "true"
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       containers:
-        - image: gcr.io/heptio-images/ks-guestbook-demo:0.1
+        - image: gcr.io/heptio-images/ks-guestbook-demo:0.2
           name: guestbook-ui
+          ports:
+            - containerPort: 80
+              protocol: TCP
   strategy:
     canary:
       stableMetadata:
         labels:
-          argo-rollout/version: stable
+          argo-rollouts/version: stable
       canaryMetadata:
         labels:
-          argo-rollout/version: canary
+          argo-rollouts/version: canary
       steps:
+        - setHeaderRoute:
+            name: header-version
+            match:
+              - headerName: version
+                headerValue:
+                  prefix: "0.2"
         - setWeight: 10
         - pause:
             duration: 1m
@@ -36,11 +45,13 @@ spec:
             duration: 1m
         - setWeight: 100
       trafficRouting:
+        managedRoutes:
+          - name: header-version
         istio:
           virtualService:
             name: guestbook-ui
             routes:
-              - guestbook-ui
+              - primary
           destinationRule:
             name: guestbook-ui
             stableSubsetName: stable

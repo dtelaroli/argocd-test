@@ -7,6 +7,17 @@ spec:
     - istio-gateways/public
   hosts:
     - guestbook.mydomain.com
+  http:
+    - name: primary
+      route:
+        - destination:
+            host: guestbook-ui
+            subset: stable
+          weight: 100
+        - destination:
+            host: guestbook-ui
+            subset: canary
+          weight: 0
   tls:
     - match:
         - port: 443
@@ -14,14 +25,10 @@ spec:
             - guestbook.mydomain.com
       route:
         - destination:
+            host: guestbook-ui
             subset: stable
-            host: guestbook-ui.product.svc.cluster.local
-            port:
-              number: 80
           weight: 100
         - destination:
+            host: guestbook-ui
             subset: canary
-            host: guestbook-ui.product.svc.cluster.local
-            port:
-              number: 80
           weight: 0

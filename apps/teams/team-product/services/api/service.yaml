@@ -7,4 +7,4 @@ spec:
   - port: 80
     targetPort: 80
   selector:
-    app: guestbook-ui
+    guestbook.mydomain.com/app: guestbook-ui

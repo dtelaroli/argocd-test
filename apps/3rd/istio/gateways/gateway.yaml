@@ -17,8 +17,8 @@ spec:
     - hosts:
         - "argocd.mydomain.com"
       port:
-        number: 443
         name: argocd
+        number: 443
         protocol: HTTPS
       tls:
         mode: SIMPLE
@@ -26,8 +26,8 @@ spec:
     - hosts:
         - "guestbook.mydomain.com"
       port:
-        number: 443
         name: guestbook
+        number: 443
         protocol: HTTPS
       tls:
         mode: SIMPLE
