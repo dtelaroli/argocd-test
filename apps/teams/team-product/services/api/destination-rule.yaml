@@ -5,6 +5,11 @@ metadata:
 spec:
   host: guestbook-ui
   subsets:
-    - name: v1
+    - name: stable
       labels:
-        version: v1
+        name: guestbook-ui
+        argo-rollout/version: stable
+    - name: canary
+      labels:
+        name: guestbook-ui
+        argo-rollout/version: canary

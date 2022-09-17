@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: guestbook-ui
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: guestbook-ui
+  template:
+    metadata:
+      labels:
+        app: guestbook-ui
+      annotations:
+        sidecar.istio.io/inject: "true"
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      containers:
+        - image: gcr.io/heptio-images/ks-guestbook-demo:0.2
+          name: guestbook-ui
+  strategy:
+    canary:
+      stableMetadata:
+        labels:
+          argo-rollout/version: stable
+      canaryMetadata:
+        labels:
+          argo-rollout/version: canary
+      steps:
+        - setWeight: 10
+        - pause:
+            duration: 1m
+        - setWeight: 50
+        - pause:
+            duration: 1m
+        - setWeight: 100
+      trafficRouting:
+        istio:
+          virtualService:
+            name: guestbook-ui
+            routes:
+              - guestbook-ui
+          destinationRule:
+            name: guestbook-ui
+            stableSubsetName: stable
+            canarySubsetName: canary

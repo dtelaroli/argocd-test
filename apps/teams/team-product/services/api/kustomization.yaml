@@ -1,8 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - deployment.yaml
+  - argo-rollout.yaml
+  # - deployment.yaml
   - destination-rule.yaml
-  # - ingress.yaml
   - service.yaml
   - virtual-service.yaml
