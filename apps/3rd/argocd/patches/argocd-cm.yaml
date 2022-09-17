@@ -9,3 +9,4 @@ metadata:
   namespace: argocd
 data:
   accounts.team-product: login
+  statusbadge.enabled: "true"
