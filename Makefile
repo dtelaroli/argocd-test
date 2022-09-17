@@ -9,11 +9,21 @@ install:
 	@kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 	@kubectl apply -f projects/argo-application.yaml
 
-	@sleep 30
+	@make wait
 	@make forward &
-	@bash scripts/update_pass.sh
+	@bash scripts/update_pass.sh "localhost:8888" "admin" "admin123"
+	@make wait
+	@kubectl rollout restart deployment/istio-ingressgateway -n istio-system
+	@make wait
 	@kubectl rollout restart deployment/argocd-server -n argocd
-	@fg
+
+wait:
+	@echo 'Waiting 30 seconds'
+	@sleep 30
+
+.PHONY: update_pass
+update_pass:
+	@bash scripts/update_pass.sh "argocd.mydomain.com" "team-product" "admin123"
 
 forward:
 	@kubectl port-forward svc/argocd-server -n argocd 8888:80
@@ -26,11 +36,11 @@ git:
 cert:
 	@openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -subj '/O=mydomain Inc./CN=mydomain.com' -keyout mydomain.com.key -out mydomain.com.crt
 	
-	@openssl req -out argocd.mydomain.com.csr -newkey rsa:2048 -nodes -keyout argocd.mydomain.com.key -subj "/CN=*.mydomain.com/O=httpbin organization"
+	@openssl req -out argocd.mydomain.com.csr -newkey rsa:2048 -nodes -keyout argocd.mydomain.com.key -subj "/CN=argocd.mydomain.com/O=my organization"
 	@openssl x509 -req -sha256 -days 365 -CA mydomain.com.crt -CAkey mydomain.com.key -set_serial 0 -in argocd.mydomain.com.csr -out argocd.mydomain.com.crt
 	@kubectl create -n istio-system secret tls argocd-credential --key=argocd.mydomain.com.key --cert=argocd.mydomain.com.crt --dry-run=client -o yaml > argocd-secret.yaml
 	
-	@openssl req -out guestbook.mydomain.com.csr -newkey rsa:2048 -nodes -keyout guestbook.mydomain.com.key -subj "/CN=*.mydomain.com/O=httpbin organization"
+	@openssl req -out guestbook.mydomain.com.csr -newkey rsa:2048 -nodes -keyout guestbook.mydomain.com.key -subj "/CN=guestbook.mydomain.com/O=my organization"
 	@openssl x509 -req -sha256 -days 365 -CA mydomain.com.crt -CAkey mydomain.com.key -set_serial 0 -in guestbook.mydomain.com.csr -out guestbook.mydomain.com.crt
 	@kubectl create -n istio-system secret tls guestbook-credential --key=guestbook.mydomain.com.key --cert=guestbook.mydomain.com.crt --dry-run=client -o yaml > guestbook-secret.yaml
 
