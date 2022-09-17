@@ -1,21 +1,24 @@
-# .PHONY
+SHELL:=/bin/bash
+.ONESHELL:
+
+.PHONY: init
+init:
+	make install
+	make change_pass
+
+.PHONY: install
 install:
 	bash ./scripts/install.sh
 
+.PHONY: forward
 forward:
-	kubectl port-forward svc/argocd-server -n argocd 8888:80 &
+	kubectl port-forward svc/argocd-server -n argocd 8888:https
 
+.PHONY: change_pass
 change_pass:
 	bash ./scripts/update_pass.sh
 
-# .PHONY
-create_root:
-	kubectl apply -f projects/argo-application.yaml
-
-test:
-	curl -i http://guestbook-ui-example.com:8880/
-	curl -i https://guestbook-ui-example.com:4443/
-
+.PHONY: cert
 git:
 	eval `ssh-agent`
 	git add --all && git commit --amend --no-edit && git push origin main -f
@@ -33,3 +36,11 @@ cert:
 
 	rm *.crt *.key *.csr
 	mv argocd-secret.yaml guestbook-secret.yaml apps/3rd/istio/gateways/
+
+.PHONY: help
+help: ## Display help screen
+	@echo "Usage:"
+	@echo "	make [COMMAND]"
+	@echo "	make help "
+	@echo "Commands:"
+	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

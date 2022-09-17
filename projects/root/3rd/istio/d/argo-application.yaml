@@ -4,6 +4,8 @@ metadata:
   name: istiod
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   project: 3rd
   destination:
@@ -16,7 +18,7 @@ spec:
     helm:
       version: v3
   syncPolicy:
-    automated:
-      selfHeal: true
+    # automated:
+    #   selfHeal: true
     syncOptions:
       - FailOnSharedResource=true

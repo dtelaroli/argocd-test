@@ -4,6 +4,8 @@ metadata:
   name: istio-base
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: 3rd
   destination:
@@ -18,9 +20,4 @@ spec:
       selfHeal: true
     syncOptions:
       - FailOnSharedResource=true
-  ignoreDifferences:
-    - group: admissionregistration.k8s.io/v1
-      kind: ValidatingWebhookConfiguration
-      name: istiod-default-validator
-      jsonPointers:
-        - /webhooks/*/failurePolicy
+      - RespectIgnoreDifferences=true

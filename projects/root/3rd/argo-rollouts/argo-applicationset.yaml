@@ -26,8 +26,8 @@ spec:
         server: "{{ url }}"
         namespace: argo-rollouts
       syncPolicy:
-        automated:
-          selfHeal: true
+        # automated:
+        #   selfHeal: true
         syncOptions:
           - FailOnSharedResource=true
           - CreateNamespace=true
