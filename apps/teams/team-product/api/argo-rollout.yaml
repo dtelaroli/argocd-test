@@ -34,16 +34,18 @@ spec:
         - setHeaderRoute:
             name: header-version
             match:
-              - headerName: version
+              - headerName: x-version
                 headerValue:
                   prefix: "0.2"
         - setWeight: 10
         - pause:
-            duration: 1m
+            duration: 30s
         - setWeight: 50
         - pause:
-            duration: 1m
+            duration: 30s
         - setWeight: 100
+        - pause:
+            duration: 30s
       trafficRouting:
         managedRoutes:
           - name: header-version

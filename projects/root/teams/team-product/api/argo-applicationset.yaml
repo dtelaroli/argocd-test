@@ -19,7 +19,7 @@ spec:
       project: team-product
       source:
         repoURL: https://github.com/dtelaroli/argocd-test.git
-        path: apps/teams/team-product/services
+        path: apps/teams/team-product
         targetRevision: main
       destination:
         server: "{{url}}"

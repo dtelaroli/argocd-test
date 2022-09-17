@@ -8,9 +8,6 @@ spec:
     - name: stable
       labels:
         guestbook.mydomain.com/app: guestbook-ui
-        argo-rollouts/version: stable
-
     - name: canary
       labels:
         guestbook.mydomain.com/app: guestbook-ui
-        argo-rollouts/version: canary

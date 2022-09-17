@@ -16,8 +16,8 @@ data:
       - rollouts-controller
     jsonPointers:
       - /spec/replicas
+      - /spec/tls
+      - /spec/http
+      - /spec/template/spec
     jqPathExpressions:
       - '.webhooks[]?.failurePolicy'
-      - '.spec.tls'
-      - '.spec.http'
-      - '.spec.template'
