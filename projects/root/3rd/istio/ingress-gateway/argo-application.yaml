@@ -18,5 +18,7 @@ spec:
     helm:
       version: v3
   syncPolicy:
+    automated:
+      selfHeal: true
     syncOptions:
       - FailOnSharedResource=true

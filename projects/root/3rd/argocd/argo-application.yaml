@@ -4,6 +4,8 @@ metadata:
   name: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   project: 3rd
   destination:
@@ -14,8 +16,8 @@ spec:
     repoURL: https://github.com/dtelaroli/argocd-test.git
     targetRevision: main
   syncPolicy:
-    # automated:
-    #   selfHeal: true
+    automated:
+      selfHeal: true
     syncOptions:
       - FailOnSharedResource=true
       - PrunePropagationPolicy=orphan

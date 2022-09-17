@@ -9,5 +9,5 @@ Project to demonstrate ArgoCD implementation.
 Execute the command below:
 
 ```shell
-make install
+make init
 ```
