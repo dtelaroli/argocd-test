@@ -9,24 +9,28 @@ install:
 	@kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 	@kubectl apply -f projects/argo-application.yaml
 
-	@make wait
+	@wait
 	@make forward &
 	@bash scripts/update_pass.sh "localhost:8888" "admin" "admin123"
-	@make wait
-	@kubectl rollout restart deployment/istio-ingressgateway -n istio-system
-	@make wait
-	@kubectl rollout restart deployment/argocd-server -n argocd
+	@argocd app sync root
 
 wait:
 	@echo 'Waiting 30 seconds'
 	@sleep 30
+
+sync:
+	@argocd app list -o name | xargs argocd app sync
+
+restart:
+	@kubectl rollout restart deployment/istio-ingressgateway -n istio-system
+	@kubectl rollout restart deployment/argocd-server -n argocd
 
 .PHONY: update_pass
 update_pass:
 	@bash scripts/update_pass.sh "argocd.mydomain.com" "team-product" "admin123"
 
 forward:
-	@kubectl port-forward svc/argocd-server -n argocd 8888:80
+	@kubectl port-forward svc/argocd-server -n argocd 8888:443
 
 .PHONY: git
 git:

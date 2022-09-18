@@ -18,6 +18,5 @@ data:
       - /spec/replicas
       - /spec/tls
       - /spec/http
-      - /spec/template/spec
     jqPathExpressions:
       - '.webhooks[]?.failurePolicy'

@@ -12,11 +12,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
       - name: Update version in manifest
         run: |
           echo "Deploy tag: ${{ github.event.inputs.tag }}"
-          
-          yq -i '.spec.source.helm.parameters |= map(select(.name == "*image.tag").value="${{TAG}}")' ./argo/environments/${{ENV_NAME}}/${{SQUAD_OWNER}}/${{CF_REPO_NAME}}/${{REGION}}/argo-application.yaml
+          yq -i '.canary.version = "${{ github.event.inputs.tag }}"' apps/teams/team-product/api/values.yaml
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
