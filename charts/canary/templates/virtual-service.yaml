@@ -1,34 +1,41 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: {{ .Values.application }}
+  name: "{{ .Values.application }}"
 spec:
   gateways:
     - istio-gateways/public
   hosts:
-    - {{ .Values.application }}.mydomain.com
+    - "{{ .Values.application }}.mydomain.com"
   http:
     - name: primary
       route:
         - destination:
-            host: {{ .Values.application }}
+            host: "{{ .Values.application }}"
             subset: stable
           weight: 100
         - destination:
-            host: {{ .Values.application }}
+            host: "{{ .Values.application }}"
             subset: canary
-          weight: 0
+    - name: primary
+      route:
+        - destination:
+            host: "{{ .Values.application }}"
+            subset: stable
+          weight: 100
+        - destination:
+            host: "{{ .Values.application }}"
+            subset: canary
   tls:
     - match:
         - port: 443
           sniHosts:
-            - {{ .Values.application }}.mydomain.com
+            - "{{ .Values.application }}.mydomain.com"
       route:
         - destination:
-            host: {{ .Values.application }}
+            host: "{{ .Values.application }}"
             subset: stable
           weight: 100
         - destination:
-            host: {{ .Values.application }}
+            host: "{{ .Values.application }}"
             subset: canary
-          weight: 0

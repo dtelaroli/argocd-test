@@ -33,9 +33,15 @@ spec:
           - FailOnSharedResource=true
           - RespectIgnoreDifferences=true
       ignoreDifferences:
-        - group: "rgoproj.io/v1alpha1"
-          kind: "Rollout"
-          jsonPointers:
-            - /spec/http
+        - group: "*"
+          kind: "*"
+          jqPathExpressions:
+            - .spec.template.spec.containters
           managedFieldsManagers:
             - rollouts-controller
+        - group: "*"
+          kind: "*"
+          jqPathExpressions:
+            - .spec.replicas
+          managedFieldsManagers:
+            - argocd-server
