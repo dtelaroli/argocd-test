@@ -10,13 +10,8 @@ metadata:
 data:
   accounts.team-product: login
   statusbadge.enabled: "true"
-  # resource.customizations.ignoreDifferences.all: |
-  #   managedFieldsManagers:
-  #     - kube-controller-manager
-  #     - rollouts-controller
-  #   jsonPointers:
-  #     - /spec/replicas
-  #     - /spec/tls
-  #     - /spec/http
-  #   jqPathExpressions:
-  #     - '.webhooks[]?.failurePolicy'
+  resource.customizations.ignoreDifferences.all: |
+    managedFieldsManagers:
+      - kube-controller-manager
+    jqPathExpressions:
+      - '.webhooks[]?.failurePolicy'
