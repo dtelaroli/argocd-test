@@ -12,12 +12,12 @@ spec:
     metadata:
       labels:
         guestbook.mydomain.com/app: guestbook-ui
-        guestbook.mydomain.com/version: "1.7.0"
+        guestbook.mydomain.com/version: "1.8.0"
         sidecar.istio.io/inject: "true"
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       containers:
-        - image: istio/examples-bookinfo-productpage-v1:1.7.0
+        - image: istio/examples-bookinfo-productpage-v1:1.8.0
           name: guestbook-ui
           ports:
             - containerPort: 9080
@@ -36,7 +36,7 @@ spec:
             match:
               - headerName: x-version
                 headerValue:
-                  exact: "1.7.0"
+                  exact: "1.8.0"
         - setWeight: 10
         - pause:
             duration: 30s
@@ -54,7 +54,7 @@ spec:
             duration: 30s
         - setWeight: 100
         - pause:
-            duration: 30s
+            duration: 10s
       trafficRouting:
         managedRoutes:
           - name: header-version
