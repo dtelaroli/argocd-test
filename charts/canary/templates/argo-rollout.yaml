@@ -3,8 +3,8 @@ kind: Rollout
 metadata:
   name: {{ .Values.application }}
 spec:
-  replicas: 5
-  revisionHistoryLimit: 3
+  replicas: 3
+  revisionHistoryLimit: 5
   selector:
     matchLabels:
       mydomain.com/app: {{ .Values.application }}
