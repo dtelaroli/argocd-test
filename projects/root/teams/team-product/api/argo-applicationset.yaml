@@ -32,3 +32,8 @@ spec:
         syncOptions:
           - FailOnSharedResource=true
           - RespectIgnoreDifferences=true
+      ignoreDifferences:
+        - group: "rgoproj.io/v1alpha1"
+          kind: "Rollout"
+          jsonPointers:
+            - /spec/replicas
