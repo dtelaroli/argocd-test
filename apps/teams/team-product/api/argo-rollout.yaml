@@ -12,19 +12,18 @@ spec:
     metadata:
       labels:
         guestbook.mydomain.com/app: guestbook-ui
-        guestbook.mydomain.com/version: "1.6.0"
+        guestbook.mydomain.com/version: "1.7.0"
         sidecar.istio.io/inject: "true"
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       containers:
-        - image: istio/examples-bookinfo-productpage-v1:1.6.0
+        - image: istio/examples-bookinfo-productpage-v1:1.7.0
           name: guestbook-ui
           ports:
             - containerPort: 9080
               protocol: TCP
   strategy:
     canary:
-      dynamicStableScale: true
       stableMetadata:
         labels:
           argo-rollouts/version: stable
@@ -32,14 +31,12 @@ spec:
         labels:
           argo-rollouts/version: canary
       steps:
-        - setCanaryScale:
-            matchTrafficWeight: true
         - setHeaderRoute:
             name: header-version
             match:
               - headerName: x-version
                 headerValue:
-                  exact: "1.6.0"
+                  exact: "1.7.0"
         - setWeight: 10
         - pause:
             duration: 30s
