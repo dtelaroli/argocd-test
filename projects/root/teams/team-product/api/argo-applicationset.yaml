@@ -36,4 +36,6 @@ spec:
         - group: "rgoproj.io/v1alpha1"
           kind: "Rollout"
           jsonPointers:
-            - /spec/replicas
+            - /spec/http
+          managedFieldsManagers:
+            - rollouts-controller
