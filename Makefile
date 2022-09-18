@@ -47,6 +47,9 @@ cert:
 	@rm *.crt *.key *.csr
 	@mv argocd-secret.yaml guestbook-secret.yaml apps/3rd/istio/gateways/
 
+helm:
+	helm template ./helm/canary/ --values ./helm/canary/values-lint.yaml
+
 .PHONY: help
 help: ## Display help screen
 	@echo "Usage:"

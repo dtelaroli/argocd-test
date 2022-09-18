@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.application }}
+spec:
+  ports:
+  - port: {{ .Values.port }}
+    targetPort: {{ .Values.port }}
+  selector:
+    mydomain.com/app: {{ .Values.application }}

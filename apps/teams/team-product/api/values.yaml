@@ -1,0 +1,4 @@
+canary:
+  application: guestbook
+  image_repository: istio/examples-bookinfo-productpage-v1
+  port: 9080

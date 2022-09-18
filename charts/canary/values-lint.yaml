@@ -1,0 +1,5 @@
+environment: dev
+application: foo
+image_repository: foo
+version: latest
+port: "8080"

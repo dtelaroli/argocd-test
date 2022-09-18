@@ -1,26 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: guestbook-ui
+  name: {{ .Values.application }}
 spec:
   replicas: 5
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      guestbook.mydomain.com/app: guestbook-ui
+      mydomain.com/app: {{ .Values.application }}
   template:
     metadata:
       labels:
-        guestbook.mydomain.com/app: guestbook-ui
-        guestbook.mydomain.com/version: "1.9.0"
+        mydomain.com/app: {{ .Values.application }}
+        mydomain.com/version: "{{ .Values.version }}"
         sidecar.istio.io/inject: "true"
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       containers:
-        - image: istio/examples-bookinfo-productpage-v1:1.9.0
-          name: guestbook-ui
+        - image: "{{ .Values.image_repository }}:{{ .Values.version }}"
+          name: {{ .Values.application }}
           ports:
-            - containerPort: 9080
+            - containerPort: {{ .Values.port }}
               protocol: TCP
   strategy:
     canary:
@@ -36,7 +36,7 @@ spec:
             match:
               - headerName: x-version
                 headerValue:
-                  exact: "1.9.0"
+                  exact: "{{ .Values.version }}"
         - setWeight: 10
         - pause:
             duration: 20s
@@ -60,10 +60,10 @@ spec:
           - name: header-version
         istio:
           virtualService:
-            name: guestbook-ui
+            name: {{ .Values.application }}
             routes:
               - primary
           destinationRule:
-            name: guestbook-ui
+            name: {{ .Values.application }}
             stableSubsetName: stable
             canarySubsetName: canary
