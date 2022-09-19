@@ -52,7 +52,16 @@ cert:
 	@mv argocd-secret.yaml guestbook-secret.yaml apps/3rd/istio/gateways/
 
 helm:
-	helm template ./helm/canary/ --values ./helm/canary/values-lint.yaml
+	@helm template ./helm/canary/ --values ./helm/canary/values-lint.yaml
+
+hosts:
+	@printf "127.0.0.1	argocd.mydomain.com\n127.0.0.1	guestbook.mydomain.com\n" >> /etc/hosts
+
+pass:
+	@kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+open:
+	@open https://guestbook.mydomain.com
 
 .PHONY: help
 help: ## Display help screen
