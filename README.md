@@ -188,4 +188,6 @@ make open
     └── update_pass.sh
 ```
 
-## 
+### Disclaimer
+
+It's a best practice don't use the application manifests in the same repository witch the ArgoCD application is managed, so the folder `apps/teams/team-product/api` should be in other repo. The best place to put the api manifests is in the its self repository. Here it's in the same repository for tests purpose.
