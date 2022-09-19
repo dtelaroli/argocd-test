@@ -4,6 +4,13 @@ Project to demonstrate GitOps with GithubActions and ArgoCD.
 
 <img src="https://argocd.mydomain.com/api/badge?name=3rd" alt="status"/>
 
+## Componentes
+
+- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
+- [Argo Rollouts](https://argoproj.github.io/argo-rollouts/)
+- [Istio](https://istio.io)
+- [Github Actions](https://github.com/features/actions)
+
 ## Installation
 
 First of all, we need install manually the ArgoCD in the cluster. It will be our manager to install any k8s components, such: Argo-Rollouts and Istio.
@@ -16,7 +23,9 @@ make install
 
 The script install the ArgoCD, configure the admin password and creates the root project, which is responsible to create the whole applications.
 
-## ArgoCD password
+## GitOps
+
+### ArgoCD password
 
 The default password is stored in a configmap. Execute the command below to get the password:
 
@@ -26,7 +35,7 @@ make pass
 
 The install script changes (or even try to change) the password to: `admin123`
 
-## ArgoCD console
+### ArgoCD console
 
 You can test the ArgoCD installation executing the port-forward and accessing it in the browser:
 
@@ -49,7 +58,7 @@ All applications have autosync configured, except the product-api-dev, which sho
 
 ![](docs/product-api-dev.png)
 
-## Deploy
+### Deploy
 
 To deploy a new version of the app go to the [Github Actions](https://github.com/dtelaroli/argocd-test/actions/workflows/release.yaml) and build a new version choosing for one [application tag](https://hub.docker.com/r/istio/examples-bookinfo-productpage-v1/tags).
 
@@ -69,12 +78,11 @@ We have an ArgoRollout extension witch allows to see the rollout steps, click ov
 
 ![](docs/more.png)
 
-## Componentes
+To access the application open the URL: https://guestbook.mydomain.com.
 
-- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
-- [Argo Rollouts](https://argoproj.github.io/argo-rollouts/)
-- [Istio](https://istio.io)
-- [Github Actions](https://github.com/features/actions)
+```shell
+make open
+```
 
 ## Tree
 

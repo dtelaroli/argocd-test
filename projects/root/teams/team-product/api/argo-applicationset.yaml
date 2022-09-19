@@ -38,6 +38,7 @@ spec:
           jqPathExpressions:
             - .spec.template.spec.containters
           managedFieldsManagers:
+            - argocd-application-controller
             - rollouts-controller
         - group: "*"
           kind: "*"
