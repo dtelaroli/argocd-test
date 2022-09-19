@@ -63,6 +63,9 @@ pass:
 open:
 	@open https://guestbook.mydomain.com
 
+tree:
+	@tree --gitignore | pbcopy
+
 .PHONY: help
 help: ## Display help screen
 	@echo "Usage:"

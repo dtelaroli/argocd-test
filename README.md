@@ -10,10 +10,11 @@ Project to demonstrate GitOps with GithubActions and ArgoCD.
 - [Argo Rollouts](https://argoproj.github.io/argo-rollouts/)
 - [Istio](https://istio.io)
 - [Github Actions](https://github.com/features/actions)
+- [Helm](https://helm.sh)
 
 ## Installation
 
-First of all, we need install manually the ArgoCD in the cluster. It will be our manager to install any k8s components, such: Argo-Rollouts and Istio.
+First of all, we need install manually the ArgoCD in the cluster. It will be our manager to install any k8s components, such: Argo-Rollouts and Istio. For this test was used the [Rancher Desktop](https://rancherdesktop.io) to setup a k8s cluster.
 
 To install and configure the ArgoCD in the cluster, execute the command below:
 
@@ -57,6 +58,10 @@ open https://argocd.mydomain.com
 All applications have autosync configured, except the product-api-dev, which should be synced manually. Open the application and click in sync->syncronize buttom (sometimes we need sync twice).
 
 ![](docs/product-api-dev.png)
+
+### Helm
+
+There is a simple [helm template](./charts/canary) used to sync the application.
 
 ### Deploy
 
@@ -134,6 +139,13 @@ make open
 │       ├── values-lint.yaml
 │       ├── values.schema.json
 │       └── values.yaml
+├── docs
+│   ├── argocd.png
+│   ├── canary.png
+│   ├── github-actions.png
+│   ├── more.png
+│   ├── out-of-sync.png
+│   └── product-api-dev.png
 ├── environments
 │   └── dev
 │       └── config.yaml
