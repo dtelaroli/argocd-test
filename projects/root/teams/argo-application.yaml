@@ -4,8 +4,6 @@ metadata:
   name: teams
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  annotations:
-    argocd.argoproj.io/sync-wave: "10"
 spec:
   project: teams
   destination:

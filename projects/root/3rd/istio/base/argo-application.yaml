@@ -4,8 +4,6 @@ metadata:
   name: istio-base
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   project: 3rd
   destination:

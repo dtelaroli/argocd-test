@@ -6,4 +6,3 @@ metadata:
     name: istio-gateways
   annotations:
     argocd.argoproj.io/sync-options: Prune=false
-    argocd.argoproj.io/sync-wave: "1"

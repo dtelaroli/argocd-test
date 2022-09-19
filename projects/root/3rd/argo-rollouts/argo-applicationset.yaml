@@ -4,8 +4,6 @@ metadata:
   name: argo-rollouts
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  annotations:
-    argocd.argoproj.io/sync-wave: "5"
 spec:
   generators:
     - git:
