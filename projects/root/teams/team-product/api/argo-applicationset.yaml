@@ -20,7 +20,7 @@ spec:
       source:
         repoURL: https://github.com/dtelaroli/argocd-test.git
         path: apps/teams/team-product/api
-        targetRevision: main
+        targetRevision: feature/experiments
         helm:
           parameters:
             - name: "canary.environment"

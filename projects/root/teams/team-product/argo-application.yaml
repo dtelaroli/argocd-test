@@ -15,8 +15,8 @@ spec:
     repoURL: https://github.com/dtelaroli/argocd-test.git
     targetRevision: main
   syncPolicy:
-    automated:
-      selfHeal: true
+    # automated:
+    #   selfHeal: true
     syncOptions:
       - FailOnSharedResource=true
       - RespectIgnoreDifferences=true
