@@ -1,12 +1,13 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: "{{ .Values.application }}"
+  name: "guestbook"
+  namespace: product
 spec:
   gateways:
     - istio-gateways/public
   hosts:
-    - "{{ .Values.application }}.mydomain.com"
+    - "guestbook.mydomain.com"
   http:
     - name: version
       match:
@@ -15,27 +16,25 @@ spec:
               exact: "1.2.0"
       route:
         - destination:
-            host: "{{ .Values.application }}"
+            host: "guestbook"
             subset: canary
           weight: 100
-    {{- range $name, $version := .Values.experiments }}
-    - name: {{ $name }}
+    - name: experiment-1
       match:
         - headers:
             x-version:
-              exact: "{{ $version }}"
+              exact: "1.16.2"
       route:
         - destination:
-            host: "{{ $name }}"
+            host: "guestbook-strange-canary"
           weight: 100
-    {{- end }}
     - name: primary
       route:
         - destination:
-            host: "{{ .Values.application }}"
+            host: "guestbook"
             subset: stable
           weight: 100
         - destination:
-            host: "{{ .Values.application }}"
+            host: "guestbook"
             subset: canary
           weight: 0
