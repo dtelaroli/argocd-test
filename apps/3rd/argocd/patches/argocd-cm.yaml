@@ -8,7 +8,7 @@ metadata:
   name: argocd-cm
   namespace: argocd
 data:
-  accounts.team-product: login
+  accounts.team-product: login,apiKey
   statusbadge.enabled: "true"
   resource.customizations.ignoreDifferences.all: |
     managedFieldsManagers:
