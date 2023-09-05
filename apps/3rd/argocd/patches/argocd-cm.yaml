@@ -8,8 +8,9 @@ metadata:
   name: argocd-cm
   namespace: argocd
 data:
-  accounts.team-product: login,apiKey
   statusbadge.enabled: "true"
+  accounts.team-product: login
+  accounts.provider-argocd: apiKey
   resource.customizations.ignoreDifferences.all: |
     managedFieldsManagers:
       - kube-controller-manager

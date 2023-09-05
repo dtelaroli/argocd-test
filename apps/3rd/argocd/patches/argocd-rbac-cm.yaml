@@ -13,4 +13,5 @@ data:
     p, role:teams, applications, get, teams/*, allow
     g, admin, role:admin
     g, role:teams, role:teams
+    g, role:admin, provider-argocd
   policy.default: role:teams
